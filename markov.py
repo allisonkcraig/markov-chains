@@ -15,7 +15,7 @@ for line in opened_file:
 corpus_string = " ".join(split_words)
 
 # print corpus_string
-
+# print corpus_string
 
 
 def make_chains(corpus_string):
@@ -25,22 +25,19 @@ def make_chains(corpus_string):
     #     if key == a key in dictionary:
 
     #     value += (word + 2)
-    for word in range(len(split_words)):    
-        if word +1 == len(split_words):
-            lined_to_corpus[split_words[word],split_words[word+1]] = split_words[split_words[0]]
-            break
+    for index in range(len(split_words)-2):  
+        key1 = split_words[index]
+        key2 = split_words[index +1]
+        for key, value in lined_to_corpus.items(): 
+            if (key1, key2) == lined_to_corpus[key]:
+                lined_to_corpus[key] = value.extend(split_words[index+ 2])
         else:
-            lined_to_corpus[split_words[word],split_words[word+1]] = split_words[word+2]
-        # if split_words[word +1] != len(split_words):
-        #     lined_to_corpus[(split_words[word],split_words[word+1])] = split_words[word+2]
-        # else:
-        #     lined_to_corpus[(split_words[word],split_words[word+1])] = split_words[split_words[0]]
-        #     break
+            lined_to_corpus[split_words[index],split_words[index+1]] = [split_words[index+2]]
+    
 
 
 
-
-print lined_to_corpus
+    print lined_to_corpus
     # return {}
 
 make_chains(corpus_string)
