@@ -67,7 +67,7 @@ def make_text(chains):
     initial_key = []
 
     current_key = []
-
+ 
     for keys, values in chains.items():
         if len(tweet_list) < 200:
             if tweet_list ==  []:
