@@ -15,6 +15,7 @@ for line in opened_file:
 # print split_words
 #convert list into string
 corpus_string = " ".join(split_words)
+corpus_string.lower()
 
 # print corpus_string
 # print corpus_string
@@ -56,18 +57,47 @@ def make_chains(corpus_string):
 
 make_chains(corpus_string)
 
+
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
-
-    tweet_list = []
-     #this list will eventually be turned into a string
-    key_list = []
+    #finds random key,
     
-    for keys, value in chains.items():
-        key_list.append(keys)
-        print key_list
-        first_key = random.choice(keys_list) #finds random key,
-        print first_key
+    tweet_list = []
+
+    initial_key = []
+
+    current_key = []
+
+    for keys, values in chains.items():
+        if len(tweet_list) < 200:
+            if tweet_list ==  []:
+                initial_key = random.choice(chains.keys())
+                tweet_list.extend(initial_key)
+                values = chains[initial_key]
+                value = random.choice(values)
+            # print initial_key
+          
+            # print value
+                tweet_list.append(value)
+            # print tweet_list
+                current_key = (initial_key[1], value)     
+                # print tweet_list
+                # print current_key   
+            else:
+                if current_key not in chains.keys():    
+                    break 
+                else:
+                    values = chains[current_key]
+                    value = random.choice(values)
+                    tweet_list.append(value)
+                    # print tweet_list
+                    current_key = (current_key[1], value)
+           
+
+    # return tweet_list
+
+
+            # print tweet_list
         # tweet_list.extend(first_key)clear
         # #chooses a random key and extends it to tweet_list
 
@@ -75,8 +105,9 @@ def make_text(chains):
         # new_key2 = random.choice(value)
 
         # chains[(new_key1, new_key2)]
-
-    return "Here's some random text."
+    # print chains
+    tweet_string = " ".join(tweet_list)
+    return tweet_string
 
 
 
@@ -95,4 +126,4 @@ random_text = make_text(chain_dict)
 print random_text
 
 
-print make_text(chain_dict)
+# print make_text(chain_dict)
