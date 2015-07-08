@@ -59,12 +59,24 @@ make_chains(corpus_string)
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
-    for keys in chains:
-        print chains.random()
+    tweet_list = []
+     #this list will eventually be turned into a string
+    key_list = []
+    
+    for keys, value in chains.items():
+        key_list.append(keys)
+        print key_list
+        first_key = random.choice(keys_list) #finds random key,
+        print first_key
+        # tweet_list.extend(first_key)clear
+        # #chooses a random key and extends it to tweet_list
 
+        # new_key1 = first_key[1]
+        # new_key2 = random.choice(value)
+
+        # chains[(new_key1, new_key2)]
 
     return "Here's some random text."
-
 
 
 
