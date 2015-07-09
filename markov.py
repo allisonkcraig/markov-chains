@@ -1,6 +1,6 @@
 import random
-
-opened_file = open("green-eggs.txt") 
+file_prompt = str(raw_input('What File?'))
+opened_file = open(file_prompt) 
 
 # import sys
 
@@ -9,13 +9,20 @@ opened_file = open("green-eggs.txt")
 split_words = []
 #convert file into list
 for line in opened_file:
-    word = line.rstrip( ).split(" ")
-    split_words.extend(word) 
 
+    words = line.rstrip( ).split(" ")
+    for word in words:
+        word = word.lower()
+        word = word.rstrip(".")
+        split_words.append(word) 
+
+        
+
+print split_words
 # print split_words
 #convert list into string
-corpus_string = " ".join(split_words)
-corpus_string.lower()
+# corpus_string = " ".join(split_words)
+# corpus_string.lower()
 
 # print corpus_string
 # print corpus_string
@@ -69,7 +76,7 @@ def make_text(chains):
     current_key = []
  
     for keys, values in chains.items():
-        if len(tweet_list) < 200:
+        if len(tweet_list) <22:
             if tweet_list ==  []:
                 initial_key = random.choice(chains.keys())
                 tweet_list.extend(initial_key)
@@ -94,6 +101,7 @@ def make_text(chains):
                     current_key = (current_key[1], value)
            
 
+
     # return tweet_list
 
 
@@ -107,7 +115,8 @@ def make_text(chains):
         # chains[(new_key1, new_key2)]
     # print chains
     tweet_string = " ".join(tweet_list)
-    return tweet_string
+    # return tweet_string
+    # print len(tweet_string)
 
 
 
@@ -124,6 +133,7 @@ chain_dict = make_chains(input_text)
 random_text = make_text(chain_dict)
 
 print random_text
+print len(random_text)
 
 
 # print make_text(chain_dict)
