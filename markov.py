@@ -147,3 +147,28 @@ if __name__ == "__main__":
     print len(random_text)
 
     # print make_text(chain_dict)
+
+
+
+
+
+
+
+
+
+
+api = twitter.Api(
+    consumer_key=os.environ['TWITTER_CONSUMER_KEY'],
+    consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'],
+    access_token_key=os.environ['TWITTER_ACCESS_TOKEN_KEY'],
+    access_token_secret=os.environ['TWITTER_ACCESS_TOKEN_SECRET'])
+
+
+# print api.VerifyCredentials()
+
+
+status = api.PostUpdate(random_text)
+
+
+print status.text
+
