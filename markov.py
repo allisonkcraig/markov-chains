@@ -1,3 +1,7 @@
+import os
+
+import twitter
+
 import random
 
 class SimpleMarkovGenerator(object):
@@ -54,21 +58,32 @@ class SimpleMarkovGenerator(object):
         initial_key = []
 
         current_key = []
-     
+        
+        count = 0
+
+
+
         for keys, values in self.lined_to_corpus.items():
-            if len(tweet_list) <500:
+            while count < 130:
                 if tweet_list ==  []:
                     initial_key = random.choice(self.lined_to_corpus.keys())
                     while initial_key[0][0].isupper() == False:
                         initial_key = random.choice(self.lined_to_corpus.keys())
                     tweet_list.extend(initial_key)
+                    count += len(initial_key[0])
+                    count += 1
+                    count += len(initial_key[1])
+                    count += 1
                     values = self.lined_to_corpus[initial_key]
                     value = random.choice(values)
+
                 # print initial_key
               
                 # print value
                     tweet_list.append(value)
-                # print tweet_list
+                    count += len(value)
+                    print count
+                    print len(value)
                     current_key = (initial_key[1], value)     
                     # print tweet_list
                     # print current_key   
@@ -85,6 +100,8 @@ class SimpleMarkovGenerator(object):
                     else:
                         values = self.lined_to_corpus[current_key]
                         value = random.choice(values)
+                        count += len(value)
+                        count += 1
                         tweet_list.append(value)
                         # print tweet_list
                         current_key = (current_key[1], value)
