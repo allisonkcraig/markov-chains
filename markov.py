@@ -17,11 +17,8 @@ class SimpleMarkovGenerator(object):
         for line in opened_file: # for every line in opened_file,
             words = line.rstrip( ).split(" ") # we split the line into strings called words
             for word in words: # Strip punctuation and make lower case
-                word = word.lower()
                 word = word.strip('\"')
-                word = word.rstrip(".")
                 word = word.rstrip("--")
-                word = word.rstrip(",")
                 word = word.strip()
                 split_words.append(word) # append word to split_words
 
@@ -48,7 +45,7 @@ class SimpleMarkovGenerator(object):
 
 
 
-    def make_text(self, chains):
+    def make_text(self, lined_to_corpus):
         """Takes dictionary of markov chains; returns random text."""
         #finds random key,
         
@@ -58,12 +55,14 @@ class SimpleMarkovGenerator(object):
 
         current_key = []
      
-        for keys, values in chains.items():
-            if len(tweet_list) <200:
+        for keys, values in self.lined_to_corpus.items():
+            if len(tweet_list) <500:
                 if tweet_list ==  []:
-                    initial_key = random.choice(chains.keys())
+                    initial_key = random.choice(self.lined_to_corpus.keys())
+                    while initial_key[0][0].isupper() == False:
+                        initial_key = random.choice(self.lined_to_corpus.keys())
                     tweet_list.extend(initial_key)
-                    values = chains[initial_key]
+                    values = self.lined_to_corpus[initial_key]
                     value = random.choice(values)
                 # print initial_key
               
@@ -74,18 +73,38 @@ class SimpleMarkovGenerator(object):
                     # print tweet_list
                     # print current_key   
                 else:
-                    if current_key not in chains.keys():    
+                    if current_key not in self.lined_to_corpus.keys():    
                         break 
+                    
+                    elif value[-1] == ".":
+                        break
+
+                    elif value[-1] == "?":
+                        break
+                            
                     else:
-                        values = chains[current_key]
+                        values = self.lined_to_corpus[current_key]
                         value = random.choice(values)
                         tweet_list.append(value)
                         # print tweet_list
                         current_key = (current_key[1], value)
-               
+                        
         tweet_string = " ".join(tweet_list)
         return tweet_string
         print len(tweet_string)
+
+
+class TwitterBotMarkov(SimpleMarkovGenerator):
+
+    def make_text(self, lined_to_corpus):
+        tweet = super(TwitterBotMarkov, self).make_text(lined_to_corpus)
+
+        while len(tweet) > 300:
+            tweet = super(TwitterBotMarkov, self).make_text(lined_to_corpus)
+
+        return tweet
+
+
 
 
 
@@ -96,7 +115,7 @@ class SimpleMarkovGenerator(object):
 
 if __name__ == "__main__":
 
-    new_markov = SimpleMarkovGenerator()
+    new_markov = TwitterBotMarkov()
 
 
     input_text = new_markov.process_file()
